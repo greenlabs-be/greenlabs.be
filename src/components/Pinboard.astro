@@ -1,0 +1,159 @@
+---
+import '../styles/pinboard.css';
+import { locales, localeLabels, localePaths, signOff, strings, type Locale } from '../i18n/strings';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = strings[lang];
+const site = Astro.site ?? new URL('https://greenlabs.be');
+const canonical = new URL(localePaths[lang], site).href;
+
+// Note colours, in the order the design uses them.
+const noteColours = ['var(--yellow)', 'var(--blue)', 'var(--green)'];
+const ruleChips = [
+  { bg: 'var(--yellow)', tilt: 'var(--tE)' },
+  { bg: 'var(--blue)', tilt: 'var(--tD)' },
+  { bg: 'var(--green)', tilt: 'var(--tC)' },
+  { bg: 'var(--orange)', tilt: 'var(--tF)' },
+  { bg: 'var(--pink)', tilt: 'var(--tA)' },
+];
+const cardTilts = ['var(--tA)', 'var(--tB)', 'var(--tC)'];
+const tapeTilts = ['var(--tE)', 'var(--tD)', 'var(--tC)'];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FAF6EE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1A1916" media="(prefers-color-scheme: dark)" />
+    <title>{t.title}</title>
+    <meta name="description" content={t.description} />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={new URL(localePaths[l], site).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(localePaths.en, site).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <div class="wrap">
+        <div class="topbar">
+          <div class="wordmark">Greenlabs</div>
+          <div class="topbar-end">
+            <nav class="langs" aria-label={t.languageNav}>
+              <ul role="list">
+                {
+                  locales.map((l) => (
+                    <li>
+                      <a
+                        href={localePaths[l]}
+                        hreflang={l}
+                        lang={l}
+                        aria-current={l === lang ? 'page' : undefined}
+                        title={localeLabels[l].name}
+                      >
+                        <span aria-hidden="true">{localeLabels[l].short}</span>
+                        <span class="sr-only">{localeLabels[l].name}</span>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+            <div class="tag">{t.tag}</div>
+          </div>
+        </div>
+
+        <header class="hero">
+          <h1>
+            {t.heroLead} <span class="together">{t.heroTogether}</span>
+          </h1>
+          <p class="lead">{t.intro}</p>
+        </header>
+
+        <main>
+          <section class="sizes">
+            <h2 class="label" style="--tilt: var(--tA)">{t.sizes.label}</h2>
+            <p class="body-lg intro">{t.sizes.intro}</p>
+            <div class="cards">
+              {
+                t.sizes.cards.map((c, i) => (
+                  <div class="card" style={`--bg: ${noteColours[i]}; --tilt: ${cardTilts[i]}`}>
+                    <span class="tape" aria-hidden="true" style={`--tilt: ${tapeTilts[i]}`} />
+                    <div class="size-letter">{c.letter}</div>
+                    <h3>{c.name}</h3>
+                    <p>{c.text}</p>
+                  </div>
+                ))
+              }
+            </div>
+            <p class="body-lg after">{t.sizes.after}</p>
+          </section>
+
+          <section class="band">
+            <div class="wrap">
+              <h2 class="label" style="--tilt: var(--tB)">{t.bring.label}</h2>
+              <p class="band-big">{t.bring.big}</p>
+              <p class="body-lg band-body">{t.bring.body}</p>
+            </div>
+          </section>
+
+          <section class="rules">
+            <h2 class="label" style="--tilt: var(--tC)">{t.rules.label}</h2>
+            <ol role="list">
+              {
+                t.rules.items.map((rule, i) => (
+                  <li>
+                    <span class="chip" aria-hidden="true" style={`--bg: ${ruleChips[i].bg}; --tilt: ${ruleChips[i].tilt}`}>
+                      {i + 1}
+                    </span>
+                    <span class="rule-text">{rule}</span>
+                  </li>
+                ))
+              }
+            </ol>
+          </section>
+
+          <section class="ways">
+            <h2 class="label" style="--tilt: var(--tA)">{t.ways.label}</h2>
+            <div class="ways-grid">
+              {
+                t.ways.items.map((w, i) => (
+                  <div>
+                    <h3 style={`--bg: ${noteColours[i]}; --tilt: ${cardTilts[i]}`}>{w.verb}</h3>
+                    <p>{w.text}</p>
+                  </div>
+                ))
+              }
+            </div>
+            <p class="ways-note">{t.ways.note}</p>
+          </section>
+
+          <section class="bench">
+            <h2 class="label" style="--tilt: var(--tC)">{t.bench.label}</h2>
+            <p class="body-lg bench-text">{t.bench.text}</p>
+            <p class="status">{t.bench.status}</p>
+          </section>
+        </main>
+
+        <footer>
+          <div class="footer-grid">
+            <p class="footer-status">{t.footer.status}</p>
+            <p class="signoff" lang="fr">{signOff}</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

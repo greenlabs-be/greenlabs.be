@@ -1,0 +1,412 @@
+/* Greenlabs — "Pinboard" direction (2b). Values come from Greenlabs Pinboard.dc.html. */
+
+:root {
+  --paper: #FAF6EE;
+  --ink: #1C1B19;
+  /* Text on coloured notes is always dark, in both modes. */
+  --on-note: #1C1B19;
+  --tape: rgba(250, 246, 238, 0.75);
+
+  --yellow: #FFD95A;
+  --blue: #93C8F0;
+  --green: #A7DB9E;
+  --orange: #FFB36B;
+  --pink: #F7A8C4;
+  --band: var(--pink);
+
+  --display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --text: 'Figtree', system-ui, sans-serif;
+
+  --gutter: clamp(20px, 6vw, 72px);
+
+  /* "Playful" tilt set. */
+  --tA: -1.5deg;
+  --tB: 1deg;
+  --tC: -0.6deg;
+  --tD: 2deg;
+  --tE: -3deg;
+  --tF: 3deg;
+  --tG: -1.2deg;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1A1916;
+    --ink: #F3EDE2;
+    --tape: rgba(250, 246, 238, 0.6);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a, a:hover { color: var(--ink); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page {
+  min-height: 100vh;
+  padding: clamp(28px, 4vw, 56px) var(--gutter) 0;
+  overflow: hidden;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Shared pieces ---------------------------------------------------------- */
+
+.label {
+  margin: 0;
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  background: var(--ink);
+  color: var(--paper);
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.body-lg {
+  font-size: clamp(18px, 1.6vw, 20px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* Top bar ---------------------------------------------------------------- */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(24px, 2.4vw, 28px);
+  letter-spacing: -0.02em;
+}
+
+.topbar-end {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  background: var(--yellow);
+  color: var(--on-note);
+  transform: rotate(var(--tD));
+}
+
+.langs ul {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.langs a {
+  display: block;
+  padding: 6px 8px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.langs a:hover { border-bottom-color: currentColor; }
+
+.langs a[aria-current='page'] {
+  background: var(--ink);
+  color: var(--paper);
+  transform: rotate(var(--tA));
+}
+
+.langs a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Hero ------------------------------------------------------------------- */
+
+.hero { margin-top: clamp(56px, 8vw, 96px); }
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(52px, 8.4vw, 108px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  max-width: 1000px;
+  text-wrap: balance;
+}
+
+.together {
+  display: inline-block;
+  padding: 0 0.17em 0.06em;
+  background: var(--pink);
+  color: var(--on-note);
+  transform: rotate(var(--tB));
+  margin-top: 0.12em;
+}
+
+.lead {
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  max-width: 640px;
+  font-size: clamp(19px, 1.8vw, 22px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* Three sizes ------------------------------------------------------------ */
+
+.sizes { margin-top: clamp(72px, 9vw, 112px); }
+.sizes .intro { margin: 28px 0 0; }
+
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  margin-top: 44px;
+  padding: 12px 0;
+}
+
+.card {
+  position: relative;
+  background: var(--bg);
+  color: var(--on-note);
+  padding: 40px 32px 36px;
+  transform: rotate(var(--tilt));
+}
+
+.tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 96px;
+  height: 26px;
+  margin-left: -48px;
+  background: var(--tape);
+  transform: rotate(var(--tilt));
+}
+
+.size-letter {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(64px, 6vw, 80px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.card h3 {
+  margin: 20px 0 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.card p {
+  margin: 12px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.sizes .after { margin: 40px 0 0; max-width: 720px; }
+
+/* Bring what you've got (full-bleed band) ------------------------------- */
+
+.band {
+  margin: clamp(64px, 8vw, 96px) calc(-1 * var(--gutter)) 0;
+  padding: clamp(48px, 6vw, 72px) var(--gutter);
+  background: var(--band);
+  color: var(--on-note);
+}
+
+/* The label chip on the band stays dark in both modes. */
+.band .label { background: var(--on-note); color: #FAF6EE; }
+
+.band-big {
+  margin: 32px 0 0;
+  max-width: 900px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.band-body { margin: 28px 0 0; max-width: 720px; }
+
+/* House rules ------------------------------------------------------------ */
+
+.rules { margin-top: clamp(64px, 8vw, 96px); }
+
+.rules ol {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 860px;
+}
+
+.rules li {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--bg);
+  color: var(--on-note);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 28px;
+  transform: rotate(var(--tilt));
+}
+
+.rule-text {
+  font-size: clamp(18px, 1.7vw, 21px);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/* Three ways in ---------------------------------------------------------- */
+
+.ways { margin-top: clamp(72px, 9vw, 112px); }
+
+.ways-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.ways h3 {
+  margin: 0;
+  display: inline-block;
+  max-width: 100%;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(48px, 5vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  padding: 0 10px 4px;
+  background: var(--bg);
+  color: var(--on-note);
+  transform: rotate(var(--tilt));
+}
+
+/* French verbs ("Accueillez.", "Construisez.") are twice as long as "Come.". */
+:lang(fr) .ways h3 { font-size: clamp(40px, 3.9vw, 50px); }
+
+.ways-grid p {
+  margin: 22px 0 0;
+  font-size: 18px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.ways-note { margin: 40px 0 0; font-size: 16px; line-height: 1.5; }
+
+/* On the bench ----------------------------------------------------------- */
+
+.bench { margin-top: clamp(72px, 9vw, 112px); }
+.bench-text { margin: 32px 0 0; max-width: 760px; }
+
+.status {
+  margin: 36px 0 0;
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(19px, 1.8vw, 22px);
+  letter-spacing: -0.01em;
+  padding: 12px 18px;
+  background: var(--yellow);
+  color: var(--on-note);
+  transform: rotate(var(--tG));
+}
+
+/* Footer ----------------------------------------------------------------- */
+
+footer {
+  margin-top: clamp(72px, 9vw, 112px);
+  padding: 48px 0 64px;
+  border-top: 3px dashed var(--ink);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px 48px;
+  align-items: end;
+}
+
+.footer-status { margin: 0; font-size: 16px; line-height: 1.5; text-wrap: pretty; }
+
+.signoff {
+  margin: 0;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.3;
+  text-align: left;
+}
+
+/* Wide layout (the prototype's 900px breakpoint) ------------------------ */
+
+@media (min-width: 900px) {
+  .cards,
+  .ways-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card:nth-child(2) { margin-top: 18px; }
+  .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .signoff { text-align: right; }
+}
