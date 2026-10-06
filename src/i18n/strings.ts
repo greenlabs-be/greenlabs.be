@@ -36,6 +36,7 @@ export interface Strings {
   };
   bench: { label: string; text: string; status: string };
   footer: { status: string; signOff: string };
+  theme: { label: string; auto: string; light: string; dark: string };
 }
 
 export const strings: Record<Locale, Strings> = {
@@ -93,6 +94,7 @@ export const strings: Record<Locale, Strings> = {
         "Greenlabs is a program, not a place, and not yet an association. It lives in other people's workshops and handles no money.",
       signOff: 'Not dreamers, not preachers: doers.',
     },
+    theme: { label: 'Theme', auto: 'Auto', light: 'Light', dark: 'Dark' },
   },
 
   fr: {
@@ -149,6 +151,7 @@ export const strings: Record<Locale, Strings> = {
         'Greenlabs est un programme, pas un lieu, et pas encore une association. Il vit dans les ateliers des autres et ne manipule pas d’argent.',
       signOff: 'Ni rêveurs, ni prêcheurs\u00A0: des faiseurs.',
     },
+    theme: { label: 'Thème', auto: 'Auto', light: 'Clair', dark: 'Sombre' },
   },
 
   nl: {
@@ -205,5 +208,6 @@ export const strings: Record<Locale, Strings> = {
         'Greenlabs is een programma, geen plek, en nog geen vereniging. Het leeft in de werkplaatsen van anderen en beheert geen geld.',
       signOff: 'Geen dromers, geen predikers: doeners.',
     },
+    theme: { label: 'Thema', auto: 'Auto', light: 'Licht', dark: 'Donker' },
   },
 };

@@ -22,6 +22,7 @@ const ruleChips = [
 ];
 const cardTilts = ['var(--tA)', 'var(--tB)', 'var(--tC)'];
 const tapeTilts = ['var(--tE)', 'var(--tD)', 'var(--tC)'];
+const themes = ['auto', 'light', 'dark'] as const;
 ---
 
 <!doctype html>
@@ -44,6 +45,13 @@ const tapeTilts = ['var(--tE)', 'var(--tD)', 'var(--tC)'];
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      // Apply a saved theme before first paint. "auto" (no attribute) follows the system.
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
   </head>
   <body>
     <div class="page">
@@ -152,8 +160,42 @@ const tapeTilts = ['var(--tE)', 'var(--tD)', 'var(--tC)'];
             <p class="footer-status">{t.footer.status}</p>
             <p class="signoff">{t.footer.signOff}</p>
           </div>
+          <div class="theme-switch" role="group" aria-label={t.theme.label} hidden>
+            {
+              themes.map((th) => (
+                <button type="button" data-theme-choice={th} aria-pressed="false">
+                  {t.theme[th]}
+                </button>
+              ))
+            }
+          </div>
         </footer>
       </div>
     </div>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const group = document.querySelector('.theme-switch');
+        const buttons = group.querySelectorAll('button');
+        const sync = () => {
+          const current = root.dataset.theme || 'auto';
+          buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeChoice === current)));
+        };
+        buttons.forEach((b) =>
+          b.addEventListener('click', () => {
+            const choice = b.dataset.themeChoice;
+            if (choice === 'auto') delete root.dataset.theme;
+            else root.dataset.theme = choice;
+            try {
+              if (choice === 'auto') localStorage.removeItem('theme');
+              else localStorage.setItem('theme', choice);
+            } catch {}
+            sync();
+          })
+        );
+        sync();
+        group.hidden = false;
+      })();
+    </script>
   </body>
 </html>
