@@ -38,9 +38,6 @@ export interface Strings {
   footer: { status: string; signOff: string };
 }
 
-/** The sign-off stays in French in every version: it is the motto. */
-export const signOff = 'Ni rêveurs, ni prêcheurs : des bricoleurs.';
-
 export const strings: Record<Locale, Strings> = {
   en: {
     title: 'Greenlabs — Come make something that works. Together.',
