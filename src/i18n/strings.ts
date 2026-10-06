@@ -35,7 +35,7 @@ export interface Strings {
     note: string;
   };
   bench: { label: string; text: string; status: string };
-  footer: { status: string };
+  footer: { status: string; signOff: string };
 }
 
 /** The sign-off stays in French in every version: it is the motto. */
@@ -94,6 +94,7 @@ export const strings: Record<Locale, Strings> = {
     footer: {
       status:
         "Greenlabs is a program, not a place, and not yet an association. It lives in other people's workshops and handles no money.",
+      signOff: 'Not dreamers, not preachers: doers.',
     },
   },
 
@@ -149,6 +150,7 @@ export const strings: Record<Locale, Strings> = {
     footer: {
       status:
         'Greenlabs est un programme, pas un lieu, et pas encore une association. Il vit dans les ateliers des autres et ne manipule pas d’argent.',
+      signOff: 'Ni rêveurs, ni prêcheurs\u00A0: des faiseurs.',
     },
   },
 
@@ -204,6 +206,7 @@ export const strings: Record<Locale, Strings> = {
     footer: {
       status:
         'Greenlabs is een programma, geen plek, en nog geen vereniging. Het leeft in de werkplaatsen van anderen en beheert geen geld.',
+      signOff: 'Geen dromers, geen predikers: doeners.',
     },
   },
 };

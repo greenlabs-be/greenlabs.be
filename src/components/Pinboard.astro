@@ -1,6 +1,6 @@
 ---
 import '../styles/pinboard.css';
-import { locales, localeLabels, localePaths, signOff, strings, type Locale } from '../i18n/strings';
+import { locales, localeLabels, localePaths, strings, type Locale } from '../i18n/strings';
 
 interface Props {
   lang: Locale;
@@ -150,7 +150,7 @@ const tapeTilts = ['var(--tE)', 'var(--tD)', 'var(--tC)'];
         <footer>
           <div class="footer-grid">
             <p class="footer-status">{t.footer.status}</p>
-            <p class="signoff" lang="fr">{signOff}</p>
+            <p class="signoff">{t.footer.signOff}</p>
           </div>
         </footer>
       </div>
